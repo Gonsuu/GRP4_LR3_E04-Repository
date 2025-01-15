@@ -1,72 +1,34 @@
-import random
-
-class Student(object):
-
-    def __init__(self, name, number):
+class Student:
+    def __init__(self, name, grade, age, student_id):
         self.name = name
-        self.scores = [0] * number
-
-    def getName(self):
-        return self.name
-
-    def setScore(self, i, score):
-        self.scores[i - 1] = score
-
-    def getScore(self, i):
-        return self.scores[i - 1]
-
-    def getAverage(self):
-        return sum(self.scores) / len(self.scores)
-
-    def getHighScore(self):
-        return max(self.scores)
+        self.grade = grade
+        self.age = age
+        self.student_id = student_id
 
     def __str__(self):
-        return f"Name: {self.name}\nScores: {' '.join(map(str, self.scores))}"
-
-    def __eq__(self, other):
-        return self.name == other.name
+        return f"Name: {self.name}, Grade: {self.grade}, Age: {self.age}, ID: {self.student_id}"
 
     def __lt__(self, other):
         return self.name < other.name
 
-    def __ge__(self, other):
-        return self.name >= other.name
-
 
 def main():
-    student1 = Student("Alice", 3)
-    student2 = Student("Bob", 3)
-    student3 = Student("Charlie", 3)
-    student4 = Student("Diana", 3)
+    students = []
 
-    student1.setScore(1, 85)
-    student1.setScore(2, 90)
-    student1.setScore(3, 95)
-
-    student2.setScore(1, 88)
-    student2.setScore(2, 92)
-    student2.setScore(3, 89)
-
-    student3.setScore(1, 75)
-    student3.setScore(2, 80)
-    student3.setScore(3, 85)
-
-    student4.setScore(1, 90)
-    student4.setScore(2, 95)
-    student4.setScore(3, 100)
-
-    students = [student1, student2, student3, student4]
-
-    random.shuffle(students)
-
+    # Read student data from the text file
+    with open("students.txt", "r") as file:
+        for line in file:
+            name, grade, age, student_id = line.strip().split(", ")
+            students.append(Student(name, int(grade), int(age), student_id))
+    
+    # Sort the students by name
     students.sort()
 
-    print("Sorted Students:")
+    # Display the sorted list of students
+    print("Sorted list of students:")
     for student in students:
         print(student)
-        print()  
 
 
-if __name__ == "__main__":
-    main()
+# Run the main function
+main()
